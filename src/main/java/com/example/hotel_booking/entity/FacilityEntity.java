@@ -53,6 +53,6 @@ public class FacilityEntity {
     @Column(name = "atm", nullable = false)
     private Long atm;
 
-    @Column(name = "outdoor_garden", nullable = false)
+    @Column(name = "outdoor_garden")
     private Long outdoorGarden;
 }

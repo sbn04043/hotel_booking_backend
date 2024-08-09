@@ -62,7 +62,7 @@ public class HotelEntity extends TimeEntity{
 
     // 사업 정보 (외래키)
     @ManyToOne
-    @JoinColumn(name = "business_id")
-    private BusinessEntity businessEntity;
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
 }
 

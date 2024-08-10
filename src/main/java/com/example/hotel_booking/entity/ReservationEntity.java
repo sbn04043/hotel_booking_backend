@@ -39,11 +39,11 @@ public class ReservationEntity {
     @Column(name = "enabled", nullable = false)
     private int enabled;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private RoomEntity roomEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 }

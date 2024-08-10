@@ -1,8 +1,15 @@
 package com.example.hotel_booking.entity;
 
+import com.example.hotel_booking.dto.HotelDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * packageName : com.example.hotelbooking.entity
@@ -20,7 +27,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "hotel")
+@NoArgsConstructor
 public class HotelEntity extends TimeEntity{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,18 +60,21 @@ public class HotelEntity extends TimeEntity{
     private String hotelFacilities;
 
     // 도시 정보 (외래키)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "city_id")
     @JoinColumn(name = "city_id")
-    private CityEntity cityEntity;
+    CityEntity cityEntity;
 
     // 시설 정보 (외래키)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "facility_id")
-    private FacilityEntity facilityEntity;
+    FacilityEntity facilityEntity;
 
     // 사업 정보 (외래키)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
+
+
 }
 

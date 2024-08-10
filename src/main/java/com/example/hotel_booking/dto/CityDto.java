@@ -1,14 +1,17 @@
 package com.example.hotel_booking.dto;
 
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 
 /**
  * DTO for {@link com.example.hotel_booking.entity.CityEntity}
  */
-@Value
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CityDto implements Serializable {
-    Long id;
-    String cityName;
+    private Long id;
+    private String cityName;
 }

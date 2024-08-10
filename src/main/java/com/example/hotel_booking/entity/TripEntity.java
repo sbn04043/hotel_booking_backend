@@ -2,6 +2,7 @@ package com.example.hotel_booking.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -20,6 +21,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "hotel_trip")
+@NoArgsConstructor
 public class TripEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +35,7 @@ public class TripEntity {
     @Column(name = "trip_content", nullable = false)
     private String tripContent;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="hotel_id")
     private HotelEntity hotelEntity;
 }

@@ -54,7 +54,7 @@ public class RoomEntity extends TimeEntity{
     @Column(name = "breakfast_price", nullable = false)
     private Long breakfastPrice;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="room_type_id")
     private RoomTypeEntity roomTypeEntity;
 

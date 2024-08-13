@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/*
  * DTO for {@link com.example.hotel_booking.entity.RoomEntity}
  */
 @Getter

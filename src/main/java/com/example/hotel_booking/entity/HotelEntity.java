@@ -55,7 +55,6 @@ public class HotelEntity extends TimeEntity{
     @JoinColumn(name = "city_id")
     private CityEntity cityEntity;
 
-
     // 사업 정보 (외래키)
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -65,13 +64,7 @@ public class HotelEntity extends TimeEntity{
     private List<HotelFacilityEntity> hotelFacilityEntities;
 
     @OneToMany(mappedBy = "hotelEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<HotelFileEntity> hotelFileEntityList;
-
-
-
-
-
-
+    private List<HotelFileEntity> hotelFileEntityList = new ArrayList<>();
 
 
     public static HotelEntity toHotelEntity(HotelDto hotelDto, CityEntity cityEntity){
@@ -84,16 +77,22 @@ public class HotelEntity extends TimeEntity{
         hotelEntity.setHotelGrade(hotelDto.getHotelGrade());
         hotelEntity.setCityEntity(cityEntity);
 
-
         return hotelEntity;
     }
 
-
-
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "HotelEntity{" +
+                "id=" + id +
+                ", hotelName='" + hotelName + '\'' +
+                ", hotelAddress='" + hotelAddress + '\'' +
+                ", hotelPhone='" + hotelPhone + '\'' +
+                ", hotelEmail='" + hotelEmail + '\'' +
+                ", hotelGrade=" + hotelGrade +
+                ", cityId=" + cityEntity.getId() +
+                ", businessEntity=" + businessEntity +
+                ", hotelFileEntityList=" + hotelFileEntityList +
+                '}';
+    }
 }
 

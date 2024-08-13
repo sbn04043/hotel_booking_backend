@@ -1,23 +1,18 @@
 package com.example.hotel_booking.service;
 
-import com.example.hotel_booking.dto.FacilityDto;
-import com.example.hotel_booking.dto.HotelDto;
+
 import com.example.hotel_booking.dto.HotelFileDto;
 import com.example.hotel_booking.entity.HotelEntity;
-import com.example.hotel_booking.entity.HotelFacilityEntity;
 import com.example.hotel_booking.entity.HotelFileEntity;
-import com.example.hotel_booking.repository.CityRepository;
 import com.example.hotel_booking.repository.HotelFileRepository;
 import com.example.hotel_booking.repository.HotelRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +37,12 @@ public class HotelFileService {
     }
 
 
+    @Autowired
+    public HotelFileService(HotelFileRepository hotelFileRepository, HotelRepository hotelRepository) {
+        this.hotelFileRepository = hotelFileRepository;
+        this.hotelRepository = hotelRepository;
+    }
+
 
     public void save(HotelFileDto hotelFileDto, Long id) {
         Optional<HotelEntity> optionalHotelEntity = hotelRepository.findById(id);
@@ -54,7 +55,7 @@ public class HotelFileService {
 
     public List<HotelFileDto> findByHotelId(long id) {
         List<HotelFileEntity> hotelFileEntityList = hotelFileRepository.findByHotelEntity_id(id);
-        List <HotelFileDto> hotelFileDtoList = new ArrayList<>();
+        List<HotelFileDto> hotelFileDtoList = new ArrayList<>();
         for (HotelFileEntity entity : hotelFileEntityList) {
             hotelFileDtoList.add(HotelFileDto.toHotelFileDto(entity, id));
 
@@ -62,13 +63,21 @@ public class HotelFileService {
         return hotelFileDtoList;
     }
 
+    public Map<Long, List<HotelFileDto>> getThumbnailList(List<Long> hotelIdList) {
+        Map<Long, List<HotelFileDto>> map = new HashMap<>();
 
+        for (Long hotelId : hotelIdList) {
+            List<HotelFileEntity> tempHotelFileEntityList = hotelFileRepository.findByHotelId(hotelId);
 
+            List<HotelFileDto> hotelFileDtoList = new ArrayList<>();
+            for (HotelFileEntity hotelFileEntity : tempHotelFileEntityList) {
+                HotelFileDto tempHotelFileDto = HotelFileDto.toHotelFileDto(hotelFileEntity, hotelId);
+                hotelFileDtoList.add(tempHotelFileDto);
+            }
 
+            map.put(hotelId, hotelFileDtoList);
+        }
+
+        return map;
+    }
 }
-
-
-
-
-
-

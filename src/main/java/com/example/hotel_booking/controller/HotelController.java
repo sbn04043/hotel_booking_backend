@@ -3,6 +3,7 @@ package com.example.hotel_booking.controller;
 import com.example.hotel_booking.dto.FacilityDto;
 import com.example.hotel_booking.dto.HotelDto;
 import com.example.hotel_booking.dto.HotelFileDto;
+import com.example.hotel_booking.entity.HotelFileEntity;
 import com.example.hotel_booking.service.FacilityService;
 import com.example.hotel_booking.service.HotelFileService;
 import com.example.hotel_booking.service.HotelService;
@@ -41,8 +42,14 @@ public class HotelController {
     @GetMapping("hotelAll")
     public HashMap<String, Object> hotelAll() {
         HashMap<String, Object> resultmap = new HashMap<>();
-        resultmap.put("hotelList", hotelService.selectAll());
-        System.out.println(resultmap);
+        List<HotelDto> hotelDtoList = hotelService.selectAll();
+        resultmap.put("hotelList", hotelDtoList);
+
+        /*List<HotelFileDto> hotelFileDtoList = hotelFileService.selectAll(hotelDtoList.stream().map(hotel -> hotel.getId()).toList());*/
+
+       /* resultmap.put("hotelFileList", hotelFileDtoList );
+
+        System.out.println(hotelFileDtoList);*/
         return resultmap;
     }
 
@@ -109,7 +116,7 @@ public class HotelController {
     }
 
     @PostMapping("imgInsert/{id}")
-    public void insertImg(@RequestParam(value = "file", required = false) MultipartFile[] files, @RequestParam Long id, HttpServletRequest request) throws IOException {
+    public void insertImg(@RequestParam(value = "file", required = false) MultipartFile[] files, @RequestParam Long id) throws IOException {
         System.out.println("HotelController.insertImg");
         System.out.println("files = " + Arrays.toString(files) + ", id = " + id);
 
@@ -164,6 +171,8 @@ public class HotelController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 
 
 

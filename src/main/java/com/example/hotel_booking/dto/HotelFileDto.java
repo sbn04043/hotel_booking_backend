@@ -29,7 +29,17 @@ public class HotelFileDto {
         hotelFileDto.setId(hotelFileEntity.getId());
         hotelFileDto.setOriginalFileName(hotelFileEntity.getOriginalFileName());
         hotelFileDto.setStoredFileName(hotelFileEntity.getStoredFileName());
+        hotelFileDto.setExtension(hotelFileEntity.getExtension());
         hotelFileDto.setHotelId(hotelId);
+
+        return hotelFileDto;
+    }
+
+    public static HotelFileDto allHotelFileDto(HotelFileEntity hotelFileEntity){
+        HotelFileDto hotelFileDto = new HotelFileDto();
+        hotelFileDto.setId(hotelFileEntity.getId());
+        hotelFileDto.setOriginalFileName(hotelFileEntity.getOriginalFileName());
+        hotelFileDto.setStoredFileName(hotelFileEntity.getStoredFileName());
 
         return hotelFileDto;
     }

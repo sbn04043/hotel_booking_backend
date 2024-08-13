@@ -29,7 +29,18 @@ public class HotelFileService {
     private final HotelRepository hotelRepository;
     private final HotelFileRepository hotelFileRepository;
 
-    private String uploadDir = "src/main/resources/uploads/hotel";
+
+    public List <HotelFileDto> selectAll(Long id){
+        List<HotelFileEntity> hotelFileEntityList = hotelFileRepository.findAll();
+
+        List < HotelFileDto> hotelFileDtoList = new ArrayList<>();
+        for (HotelFileEntity hotelFileEntity : hotelFileEntityList ) {
+            hotelFileDtoList.add(HotelFileDto.toHotelFileDto(hotelFileEntity,id));
+        }
+
+        return hotelFileDtoList;
+    }
+
 
 
     public void save(HotelFileDto hotelFileDto, Long id) {
@@ -38,6 +49,8 @@ public class HotelFileService {
         HotelFileEntity hotelFileEntity = HotelFileEntity.toHotelFileEntity(hotelFileDto, hotelEntity);
         hotelFileRepository.save(hotelFileEntity);
     }
+
+
 
     public List<HotelFileDto> findByHotelId(long id) {
         List<HotelFileEntity> hotelFileEntityList = hotelFileRepository.findByHotelEntity_id(id);

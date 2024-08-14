@@ -19,4 +19,6 @@ public interface HotelRepository extends JpaRepository<HotelEntity, Long> {
 
     @Query(value = "SELECT id FROM hotel", nativeQuery = true)
     List<Long> findAllId();
+
+
 }

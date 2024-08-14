@@ -3,25 +3,16 @@ package com.example.hotel_booking.controller;
 import com.example.hotel_booking.dto.FacilityDto;
 import com.example.hotel_booking.dto.HotelDto;
 import com.example.hotel_booking.dto.HotelFileDto;
-import com.example.hotel_booking.entity.HotelFileEntity;
 import com.example.hotel_booking.service.FacilityService;
 import com.example.hotel_booking.service.HotelFileService;
 import com.example.hotel_booking.service.HotelService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -60,8 +51,12 @@ public class HotelController {
         HashMap<String, Object> hashMap = new HashMap<>();
         HotelDto hotelDto = hotelService.findById(id);
         List<HotelFileDto> hotelFileDtoList = hotelFileService.findByHotelId(id);
+        List<Long> facilityIdList = hotelService.facilityAll(id);
 
+
+        System.out.println(facilityIdList);
         hashMap.put("hotelDto", hotelDto);
+        hashMap.put("facilities", facilityIdList);
         hashMap.put("hotelFileDtoList", hotelFileDtoList);
         return hashMap;
 

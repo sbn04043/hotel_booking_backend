@@ -43,13 +43,15 @@ public class HotelController {
     public HashMap<String, Object> hotelAll() {
         HashMap<String, Object> resultmap = new HashMap<>();
         List<HotelDto> hotelDtoList = hotelService.selectAll();
+
+        for (HotelDto hotelDto : hotelDtoList) {
+            hotelDto.setImageList(hotelFileService.findByHotelIdToName(hotelDto.getId()));
+        }
+
+        System.out.println(hotelDtoList);
+
         resultmap.put("hotelList", hotelDtoList);
 
-        /*List<HotelFileDto> hotelFileDtoList = hotelFileService.selectAll(hotelDtoList.stream().map(hotel -> hotel.getId()).toList());*/
-
-       /* resultmap.put("hotelFileList", hotelFileDtoList );
-
-        System.out.println(hotelFileDtoList);*/
         return resultmap;
     }
 
@@ -122,7 +124,7 @@ public class HotelController {
 
         StringBuilder fileNames = new StringBuilder();
 
-        Path uploadPath = Paths.get("src/main/resources/uploads/hotel");
+        Path uploadPath = Paths.get("src/main/resources/static/hotel");
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
@@ -162,7 +164,7 @@ public class HotelController {
 
     @GetMapping("image")
     public ResponseEntity<Resource> getImage(@RequestParam String fileName) throws IOException {
-        Path filePath = Paths.get("src/main/resources/uploads/hotel").resolve(fileName);
+        Path filePath = Paths.get("src/main/resources/static/hotel").resolve(fileName);
         if (Files.exists(filePath)) {
             Resource fileResource = new UrlResource(filePath.toUri());
             return ResponseEntity.ok()

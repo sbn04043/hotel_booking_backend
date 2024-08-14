@@ -177,7 +177,7 @@ public class HotelService {
         List<HotelEntity> hotelEntityList = hotelRepository.findAll();
         List <HotelDto> hotelDtoList = new ArrayList<>();
         for (HotelEntity hotelEntity : hotelEntityList){
-            hotelDtoList.add(HotelDto.toHotelDto(hotelEntity));
+            hotelDtoList.add(HotelDto.toAllHotelDto(hotelEntity));
         }
         return hotelDtoList;
     }

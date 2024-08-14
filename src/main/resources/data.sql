@@ -128,18 +128,18 @@ VALUES (1, 101, 5, 4, 5, 4.7, 'Great Room!', 'Very clean and well maintained.'),
        (1, 110, 5, 5, 5, 5.0, 'Excellent', 'Loved every bit of my stay!');
 
 -- RoomEntity 더미 데이터
-INSERT INTO room (room_name, room_max, room_price, room_content, check_in, check_out, breakfast_price)
-VALUES
-    ('Deluxe Room', 2, 200000, 'Spacious room with a king-sized bed.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 15000),
-    ('Suite', 4, 500000, 'Luxury suite with a separate living area.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 30000),
-    ('Standard Room', 2, 150000, 'Comfortable room with all standard amenities.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 10000),
-    ('Family Room', 5, 300000, 'Room perfect for families, includes extra beds.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 20000),
-    ('Single Room', 1, 100000, 'Cozy room for single travelers.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 5000),
-    ('Double Room', 2, 180000, 'Room with a double bed and a beautiful view.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 15000),
-    ('Twin Room', 2, 170000, 'Room with two separate beds.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 15000),
-    ('Presidential Suite', 6, 1000000, 'Top-tier luxury suite.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 50000),
-    ('Economy Room', 2, 80000, 'Basic room for budget travelers.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 5000),
-    ('Studio Room', 2, 220000, 'Studio-style room with kitchen facilities.', '2024-08-01 14:00:00', '2024-08-02 12:00:00', 20000);
+INSERT INTO room (room_name, room_max, room_price, room_content, breakfast_price)
+VALUES ('Deluxe Room', 2, 200000, 'Spacious room with a king-sized bed.', 15000),
+       ('Suite', 4, 500000, 'Luxury suite with a separate living area.', 30000),
+       ('Standard Room', 2, 150000, 'Comfortable room with all standard amenities.', 10000),
+       ('Family Room', 5, 300000, 'Room perfect for families, includes extra beds.', 20000),
+       ('Single Room', 1, 100000, 'Cozy room for single travelers.', 5000),
+       ('Double Room', 2, 180000, 'Room with a double bed and a beautiful view.', 15000),
+       ('Twin Room', 2, 170000, 'Room with two separate beds.', 15000),
+       ('Presidential Suite', 6, 1000000, 'Top-tier luxury suite.', 50000),
+       ('Economy Room', 2, 80000, 'Basic room for budget travelers.', 5000),
+       ('Studio Room', 2, 220000, 'Studio-style room with kitchen facilities.', 20000);
+
 
 -- RoomTypeEntity 더미 데이터
 INSERT INTO room_type (type_name, type_content)
@@ -168,4 +168,3 @@ VALUES
     ('Incheon Airport', 'Enjoy the amenities of Incheon International Airport.'),
     ('Jeonju Hanok Village', 'Explore traditional Korean houses in Jeonju.'),
     ('Ulleungdo Adventure', 'Discover the unique island of Ulleungdo.');
-

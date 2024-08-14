@@ -6,21 +6,13 @@ import com.example.hotel_booking.dto.HotelFileDto;
 import com.example.hotel_booking.service.FacilityService;
 import com.example.hotel_booking.service.HotelFileService;
 import com.example.hotel_booking.service.HotelService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -40,14 +32,33 @@ public class HotelController {
     @GetMapping("hotelAll")
     public HashMap<String, Object> hotelAll() {
         HashMap<String, Object> resultmap = new HashMap<>();
-        resultmap.put("hotelList", hotelService.selectAll());
-        System.out.println(resultmap);
+        List<HotelDto> hotelDtoList = hotelService.selectAll();
+
+        for (HotelDto hotelDto : hotelDtoList) {
+            hotelDto.setImageList(hotelFileService.findByHotelIdToName(hotelDto.getId()));
+        }
+
+        System.out.println(hotelDtoList);
+
+        resultmap.put("hotelList", hotelDtoList);
+
         return resultmap;
     }
 
-    public HotelDto selectOne(@PathVariable Long id) {
+    @GetMapping("hotelOne/{id}")
+    public HashMap<String, Object> selectOne(@PathVariable Long id) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        HotelDto hotelDto = hotelService.findById(id);
+        List<HotelFileDto> hotelFileDtoList = hotelFileService.findByHotelId(id);
+        List<Long> facilityIdList = hotelService.facilityAll(id);
 
-        return hotelService.findById(id);
+
+        System.out.println(facilityIdList);
+        hashMap.put("hotelDto", hotelDto);
+        hashMap.put("facilities", facilityIdList);
+        hashMap.put("hotelFileDtoList", hotelFileDtoList);
+        return hashMap;
+
     }
 
     @PostMapping("insert")
@@ -86,7 +97,12 @@ public class HotelController {
 
         System.out.println("HotelController.write");
 
-        return valueMap;
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", hotelDto);
+        resultMap.put("resultId", id);
+
+        return resultMap;
+
     }
 
     @GetMapping("delete/{id}")
@@ -94,4 +110,69 @@ public class HotelController {
         System.out.println("id = " + id);
         hotelService.delete(id);
     }
+
+    @PostMapping("imgInsert/{id}")
+    public void insertImg(@RequestParam(value = "file", required = false) MultipartFile[] files, @RequestParam Long id) throws IOException {
+        System.out.println("HotelController.insertImg");
+        System.out.println("files = " + Arrays.toString(files) + ", id = " + id);
+
+        StringBuilder fileNames = new StringBuilder();
+
+        Path uploadPath = Paths.get("src/main/resources/static/hotel");
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+
+        for (MultipartFile file : files) {
+            String originalFileName = file.getOriginalFilename();
+            long fileSize = file.getSize();
+            String extension = "";
+
+            if (originalFileName != null && originalFileName.contains(".")) {
+                extension = originalFileName.substring(originalFileName.lastIndexOf('.') + 1);
+            }
+
+            String storedFileName = System.currentTimeMillis() + "." + extension;
+            fileNames.append(",").append(storedFileName);
+
+            Path filePath = uploadPath.resolve(storedFileName);
+            try (InputStream inputStream = file.getInputStream()) {
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            }
+
+            HotelFileDto temp = new HotelFileDto();
+            temp.setId(id);
+            temp.setOriginalFileName(originalFileName);
+            temp.setStoredFileName(storedFileName);
+            temp.setExtension(extension);
+
+            System.out.println(temp);
+
+            hotelFileService.save(temp, id);
+
+        }
+
+    }
+
+    @GetMapping("image")
+    public ResponseEntity<Resource> getImage(@RequestParam String fileName) throws IOException {
+        Path filePath = Paths.get("src/main/resources/static/hotel").resolve(fileName);
+        if (Files.exists(filePath)) {
+            Resource fileResource = new UrlResource(filePath.toUri());
+            return ResponseEntity.ok()
+                    .body(fileResource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
+
+
+
+
+
 }

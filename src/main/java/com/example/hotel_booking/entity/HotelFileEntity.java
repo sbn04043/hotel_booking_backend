@@ -17,6 +17,9 @@ public class HotelFileEntity {
     @Column
     private String storedFileName;
 
+    @Column
+    private String extension;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotelEntity;
@@ -29,4 +32,6 @@ public class HotelFileEntity {
 
         return hotelFileEntity;
     }
+
+
 }

@@ -1,4 +1,4 @@
-INSERT INTO city (city_name)
+/*INSERT INTO city (city_name)
 VALUES ('Seoul'),
        ('Gyeonggi'),
        ('Incheon'),
@@ -127,33 +127,35 @@ VALUES (1, 101, 5, 4, 5, 4.7, 'Great Room!', 'Very clean and well maintained.'),
        (3, 109, 3, 3, 2, 2.7, 'Not Great', 'Could be better maintained.'),
        (1, 110, 5, 5, 5, 5.0, 'Excellent', 'Loved every bit of my stay!');
 
--- RoomEntity 더미 데이터
-INSERT INTO room (room_name, room_max, room_price, room_content, breakfast_price)
-VALUES ('Deluxe Room', 2, 200000, 'Spacious room with a king-sized bed.', 15000),
-       ('Suite', 4, 500000, 'Luxury suite with a separate living area.', 30000),
-       ('Standard Room', 2, 150000, 'Comfortable room with all standard amenities.', 10000),
-       ('Family Room', 5, 300000, 'Room perfect for families, includes extra beds.', 20000),
-       ('Single Room', 1, 100000, 'Cozy room for single travelers.', 5000),
-       ('Double Room', 2, 180000, 'Room with a double bed and a beautiful view.', 15000),
-       ('Twin Room', 2, 170000, 'Room with two separate beds.', 15000),
-       ('Presidential Suite', 6, 1000000, 'Top-tier luxury suite.', 50000),
-       ('Economy Room', 2, 80000, 'Basic room for budget travelers.', 5000),
-       ('Studio Room', 2, 220000, 'Studio-style room with kitchen facilities.', 20000);
-
-
 -- RoomTypeEntity 더미 데이터
-INSERT INTO room_type (type_name, type_content)
-VALUES
-    ('Single', 'Single bed for one person.'),
-    ('Double', 'Double bed for two people.'),
-    ('Twin', 'Two single beds for two people.'),
-    ('Suite', 'Luxury suite with separate living area.'),
-    ('Deluxe', 'Spacious room with premium amenities.'),
-    ('Family', 'Room for families with extra beds.'),
-    ('Presidential', 'Top-tier luxury suite with exclusive features.'),
-    ('Economy', 'Basic room for budget travelers.'),
-    ('Studio', 'Studio-style room with kitchen facilities.'),
-    ('Standard', 'Standard amenities for comfortable stay.');
+INSERT INTO room_type (id, type_name, type_content) VALUES
+                                                        (1, '스탠다드+싱글+시티뷰', 'A'),
+                                                        (2, '스탠다드+싱글+오션뷰', 'B'),
+                                                        (3, '스탠다드+더블+시티뷰', 'C'),
+                                                        (4, '스탠다드+더블+오션뷰', 'D'),
+                                                        (5, '디럭스+싱글+시티뷰', 'E'),
+                                                        (6, '디럭스+싱글+오션뷰', 'F'),
+                                                        (7, '디럭스+더블+시티뷰', 'G'),
+                                                        (8, '디럭스+더블+오션뷰', 'H'),
+                                                        (9, '스위트+시티뷰', 'I'),
+                                                        (10, '스위트+오션뷰', 'J'),
+                                                        (11, '레지던스+시티뷰', 'K'),
+                                                        (12, '레지던스+오션뷰', 'L');
+-- RoomEntity 더미 데이터
+INSERT INTO room (room_name, room_max, room_price, room_content, breakfast_price, hotel_id, room_type_id)
+VALUES ('Deluxe Room', 2, 200000, 'Spacious room with a king-sized bed.', 15000, 1, 3),
+       ('Suite', 4, 500000, 'Luxury suite with a separate living area.', 30000, 2, 4),
+       ('Standard Room', 2, 150000, 'Comfortable room with all standard amenities.', 10000, 1, 1),
+       ('Family Room', 5, 300000, 'Room perfect for families, includes extra beds.', 20000, 3, 2),
+       ('Single Room', 1, 100000, 'Cozy room for single travelers.', 5000, 1, 5),
+       ('Double Room', 2, 180000, 'Room with a double bed and a beautiful view.', 15000, 4, 7),
+       ('Twin Room', 2, 170000, 'Room with two separate beds.', 15000, 2, 4),
+       ('Presidential Suite', 6, 1000000, 'Top-tier luxury suite.', 50000, 5, 7),
+       ('Economy Room', 2, 80000, 'Basic room for budget travelers.', 5000, 1, 6),
+       ('Studio Room', 2, 220000, 'Studio-style room with kitchen facilities.', 20000, 9, 8);
+
+
+
 
 -- TripEntity 더미 데이터
 INSERT INTO hotel_trip (trip_name, trip_content)
@@ -168,3 +170,4 @@ VALUES
     ('Incheon Airport', 'Enjoy the amenities of Incheon International Airport.'),
     ('Jeonju Hanok Village', 'Explore traditional Korean houses in Jeonju.'),
     ('Ulleungdo Adventure', 'Discover the unique island of Ulleungdo.');
+*/

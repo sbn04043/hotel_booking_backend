@@ -28,6 +28,7 @@ import java.util.*;
 public class HotelController {
     private final HotelService hotelService;
     private final FacilityService facilityService;
+    private final HotelFileService hotelFileService;
 
     @GetMapping("hotelAll")
     public HashMap<String, Object> hotelAll() {

@@ -197,15 +197,17 @@ public class HotelService {
         }
     }
 
+    public HotelDto update(HotelDto hotelDto) {
+        CityEntity cityEntity = cityRepository.findById(hotelDto.getCityId()).get();
+        HotelEntity hotelEntity = HotelEntity.updateHotelEntity(hotelDto, cityEntity);
+        HotelEntity hotel = hotelRepository.save(hotelEntity);
+
+        return findById(hotel.getId());
+    }
+
     public List<Long> facilityAll(long id) {
         List<Long> byHotelEntityId = hotelFacilityRepository.findByHotelEntity_id(id);
         Collections.sort(byHotelEntityId);
-//        FacilityEntity facilityEntity = new FacilityEntity();
-//        FacilityDto facilityDto = new FacilityDto();
-//        for (HotelFacilityEntity hotelFacilityEntity : byHotelEntityId) {
-//            facilityDto.add((FacilityDto.toFacilityDto(hotelFacilityEntity, id)).getFacilityId());
-//        }
-
         return byHotelEntityId;
     }
 

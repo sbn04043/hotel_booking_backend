@@ -23,11 +23,18 @@ public class HotelFacilityEntity {
 
         public static HotelFacilityEntity toFacilityEntity(FacilityDto facilityDto, HotelEntity hotelEntity){
                 HotelFacilityEntity facilityEntity = new HotelFacilityEntity();
-                facilityEntity.setId(facilityDto.getId());
                 facilityEntity.setFacilityId(facilityDto.getFacilityId());
                 facilityEntity.setHotelEntity(hotelEntity);
                 return facilityEntity;
         }
+
+        public static HotelFacilityEntity toUpdateFacilityEntity(FacilityDto facilityDto, HotelEntity hotelEntity){
+        HotelFacilityEntity facilityEntity = new HotelFacilityEntity();
+        facilityEntity.setId(facilityDto.getId());
+        facilityEntity.setFacilityId(facilityDto.getFacilityId());
+        facilityEntity.setHotelEntity(hotelEntity);
+        return facilityEntity;
+    }
 
     public static HotelFacilityEntity toHotelFacilityEntity(FacilityDto facilityDto,HotelEntity hotelEntity) {
         HotelFacilityEntity hotelFacilityEntity = new HotelFacilityEntity();

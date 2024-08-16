@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/hotel/")
@@ -39,6 +40,8 @@ public class HotelController {
             hotelDto.setImageList(hotelFileService.findByHotelIdToName(hotelDto.getId()));
         }
 
+
+
         System.out.println(hotelDtoList);
 
         resultmap.put("hotelList", hotelDtoList);
@@ -52,11 +55,10 @@ public class HotelController {
         HotelDto hotelDto = hotelService.findById(id);
         List<HotelFileDto> hotelFileDtoList = hotelFileService.findByHotelId(id);
         List<Long> facilityIdList = hotelService.facilityAll(id);
-
-
+        List<Long> FacilityIdList = facilityIdList.stream().distinct().collect(Collectors.toList());
         System.out.println(facilityIdList);
         hashMap.put("hotelDto", hotelDto);
-        hashMap.put("facilities", facilityIdList);
+        hashMap.put("facilities", FacilityIdList);
         hashMap.put("hotelFileDtoList", hotelFileDtoList);
         return hashMap;
 
@@ -105,6 +107,50 @@ public class HotelController {
         return resultMap;
 
     }
+
+    @PostMapping("update/{id}")
+    public HashMap<String, Object> update(@RequestBody HashMap<String, Object> valueMap, @PathVariable Long id) {
+        System.out.println(valueMap);
+        HotelDto hotelDto = new HotelDto();
+
+        hotelDto.setHotelName((String) valueMap.get("hotelName"));
+        hotelDto.setHotelEmail((String) valueMap.get("hotelEmail"));
+        hotelDto.setHotelPhone((String) valueMap.get("hotelPhone"));
+        hotelDto.setHotelAddress((String) valueMap.get("hotelAddress"));
+        System.out.println(valueMap.get("hotelGrade").toString());
+        int hotelGrade = Integer.parseInt(valueMap.get("hotelGrade").toString());
+        int cityId = Integer.parseInt(valueMap.get("cityId").toString());
+
+        hotelDto.setId(id);
+        hotelDto.setHotelGrade((long) hotelGrade);
+        hotelDto.setCityId((long) cityId);
+
+        hotelService.update(hotelDto);
+
+        List<FacilityDto> facilityDtoList = new ArrayList<>();
+        System.out.println(valueMap.get("facilities").getClass());
+
+        List<Integer> facilityList = (ArrayList<Integer>) valueMap.get("facilities");
+        for (int i = 0; i < facilityList.size(); i++) {
+            FacilityDto temp = new FacilityDto();
+            temp.setHotelId(id);
+            temp.setFacilityId(facilityList.get(i).longValue());
+            facilityDtoList.add(temp);
+        }
+
+        facilityService.update(facilityDtoList, id);
+        System.out.println(facilityList);
+
+        System.out.println("HotelController.update");
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", hotelDto);
+        resultMap.put("resultId", id);
+
+        return resultMap;
+
+    }
+
 
     @GetMapping("delete/{id}")
     public void deleteHotel(@PathVariable Long id) {
@@ -168,12 +214,6 @@ public class HotelController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
-
-
-
-
 
 
 }

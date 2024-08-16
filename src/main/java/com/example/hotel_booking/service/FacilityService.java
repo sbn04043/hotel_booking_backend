@@ -23,7 +23,6 @@ public class FacilityService {
     private final HotelRepository hotelRepository;
 
 
-
     public List<FacilityDto> selectAll(Long hotelId) {
 
         List<HotelFacilityEntity> facilityEntityList = hotelFacilityRepository.findAll();
@@ -39,12 +38,21 @@ public class FacilityService {
     public void save(List<FacilityDto> facilityDtoList, Long hotelId) {
         Optional<HotelEntity> optionalHotelEntity = hotelRepository.findById(hotelId);
         HotelEntity hotelEntity = optionalHotelEntity.get();
-        for(int i = 0 ; i < facilityDtoList.size(); i++){
+        for (int i = 0; i < facilityDtoList.size(); i++) {
             HotelFacilityEntity facilityEntity = HotelFacilityEntity.toFacilityEntity(facilityDtoList.get(i), hotelEntity);
             hotelFacilityRepository.save(facilityEntity);
         }
 
     }
 
+    public void update(List<FacilityDto> facilityDtoList, Long hotelId) {
+        Optional<HotelEntity> optionalHotelEntity = hotelRepository.findById(hotelId);
+        HotelEntity hotelEntity = optionalHotelEntity.get();
+        for (int i = 0; i < facilityDtoList.size(); i++) {
+            HotelFacilityEntity facilityEntity = HotelFacilityEntity.toUpdateFacilityEntity(facilityDtoList.get(i), hotelEntity);
+            hotelFacilityRepository.save(facilityEntity);
+        }
+
+    }
 
 }

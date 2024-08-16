@@ -55,33 +55,12 @@ VALUES ('호텔 서울', '서울특별시 중구', '02-1234-5678', 'seoulhotel@e
        ('제주 호텔', '제주특별자치도 제주시', '064-9876-5432', 'jejuhotel@example.com', 5, 10);
 
 INSERT INTO hotel_facility (hotel_id, facility_id)
-VALUES (1, 1),
-       (1, 3),
-       (1, 5),
-       (1, 7),
-       (1, 9),
-       (1, 11),
-       (1, 13),
-       (2, 2),
-       (2, 4),
-       (2, 6),
-       (2, 7),
-       (2, 10),
-       (2, 13),
-       (3, 3),
-       (3, 6),
-       (3, 9),
-       (3, 12),
-       (3, 15),
-       (4, 4),
-       (4, 8),
-       (4, 12),
-       (5, 5),
-       (5, 10),
-       (5, 15),
-       (6, 3),
-       (6, 5),
-       (6, 7);
+VALUES (1, 1), (1, 3), (1, 5), (1, 7), (1, 9), (1, 11), (1, 13),
+       (2, 2), (2, 4), (2, 6), (2, 7), (2, 10), (2, 13),
+       (3, 3), (3, 6), (3, 9), (3, 12), (3, 15),
+       (4, 4), (4, 8), (4, 12),
+       (5, 5), (5, 10), (5, 15),
+       (6, 3), (6, 5), (6, 7);
 
 INSERT INTO user (email, password, name, nickname, role, address, user_gender, phone, user_grade, user_total_amount,
                   enabled)
@@ -177,13 +156,15 @@ VALUES ('Deluxe Room', 2, 200000, 'Spacious room with a king-sized bed.', 15000,
 
 -- TripEntity 더미 데이터
 INSERT INTO hotel_trip (trip_name, trip_content)
-VALUES ('Seoul Tour', 'Explore the historic sites and modern attractions of Seoul.'),
-       ('Busan Beach', 'Relax at the beautiful beaches of Busan.'),
-       ('Jeju Island', 'Discover the natural beauty of Jeju Island.'),
-       ('Gyeongju Heritage', 'Experience the ancient history of Gyeongju.'),
-       ('DMZ Visit', 'Learn about the Korean War at the DMZ.'),
-       ('Andong Culture', 'Experience traditional Korean culture in Andong.'),
-       ('Gangwon Mountains', 'Hike the scenic mountains of Gangwon-do.'),
-       ('Incheon Airport', 'Enjoy the amenities of Incheon International Airport.'),
-       ('Jeonju Hanok Village', 'Explore traditional Korean houses in Jeonju.'),
-       ('Ulleungdo Adventure', 'Discover the unique island of Ulleungdo.');
+VALUES
+    ('Seoul Tour', 'Explore the historic sites and modern attractions of Seoul.'),
+    ('Busan Beach', 'Relax at the beautiful beaches of Busan.'),
+    ('Jeju Island', 'Discover the natural beauty of Jeju Island.'),
+    ('Gyeongju Heritage', 'Experience the ancient history of Gyeongju.'),
+    ('DMZ Visit', 'Learn about the Korean War at the DMZ.'),
+    ('Andong Culture', 'Experience traditional Korean culture in Andong.'),
+    ('Gangwon Mountains', 'Hike the scenic mountains of Gangwon-do.'),
+    ('Incheon Airport', 'Enjoy the amenities of Incheon International Airport.'),
+    ('Jeonju Hanok Village', 'Explore traditional Korean houses in Jeonju.'),
+    ('Ulleungdo Adventure', 'Discover the unique island of Ulleungdo.');
+

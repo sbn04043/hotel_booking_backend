@@ -49,7 +49,7 @@ public class RoomController {
         System.out.println(roomFileDtoList);
         resultMap.put("roomDto", ROOM_SERVICE.selectOne(id));
         resultMap.put("roomTypeList", ROOM_TYPE_SERVICE.selectAll());
-        resultMap.put("roomFileDtoList",roomFileDtoList);
+        resultMap.put("roomFileDtoList", roomFileDtoList);
 
         System.out.println(ROOM_SERVICE.selectOne(id));
         // 호텔 아이디를 통해 userID를 빼와야함 지금은 없으니까 비교 안하고 클릭 버튼만 해놓자
@@ -63,7 +63,7 @@ public class RoomController {
 
         List<RoomDto> roomDtoList = ROOM_SERVICE.selectAll(id);
 
-        for (RoomDto roomDto : roomDtoList){
+        for (RoomDto roomDto : roomDtoList) {
             roomDto.setImageList(ROOM_FILE_SERVICE.findByRoomIdToName(roomDto.getId()));
         }
 

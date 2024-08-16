@@ -61,7 +61,9 @@ public class ReservationController {
         reservationDto.setReservationNumber(reservationNum);
         // 가격은 계산 나중에 다시 설정
 
-        reservationDto.setPayPrice(ROOM_SERVICE.selectOne(roomId).getRoomPrice() * 2);
+        // 숙박 일수
+        Double dayNum = (double) ((reservationDto.getEndDate().getTime() - reservationDto.getStartDate().getTime()) / (1000 * 60 * 60 * 24));
+        reservationDto.setPayPrice(ROOM_SERVICE.selectOne(roomId).getRoomPrice() * dayNum);
         HashMap<String, Object> resultMap = new HashMap<>();
         try {
             Long reservationId = RESERVATION_SERVICE.insert(reservationDto);

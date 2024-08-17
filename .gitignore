@@ -25,6 +25,8 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+application.yml
+data.sql
 
 ### NetBeans ###
 /nbproject/private/
@@ -36,6 +38,4 @@ out/
 ### VS Code ###
 .vscode/
 
-application.yml
-data.sql
-/src/main/resources/static/room/
+

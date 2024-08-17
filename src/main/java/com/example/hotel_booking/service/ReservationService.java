@@ -71,7 +71,7 @@ public class ReservationService {
 
         UserEntity userEntity = USER_REPOSITORY.findById(reservationDto.getUserId()).get();
         RoomEntity roomEntity = ROOM_REPOSITORY.findById(reservationDto.getRoomId()).get();
-        ReservationEntity reservationEntity = ReservationEntity.toInsertEntity(reservationDto, userEntity, roomEntity);
+        ReservationEntity reservationEntity = ReservationEntity.toUpdateEntity(reservationDto, userEntity, roomEntity);
 
         RESERVATION_REPOSITORY.save(reservationEntity);
 

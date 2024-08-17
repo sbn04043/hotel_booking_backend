@@ -179,5 +179,4 @@ public class RoomController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

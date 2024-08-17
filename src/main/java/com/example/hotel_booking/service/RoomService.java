@@ -4,10 +4,7 @@ import com.example.hotel_booking.dto.RoomDto;
 import com.example.hotel_booking.entity.HotelEntity;
 import com.example.hotel_booking.entity.RoomEntity;
 import com.example.hotel_booking.entity.RoomTypeEntity;
-import com.example.hotel_booking.repository.HotelRepository;
-import com.example.hotel_booking.repository.RoomFileRepository;
-import com.example.hotel_booking.repository.RoomRepository;
-import com.example.hotel_booking.repository.RoomTypeRepository;
+import com.example.hotel_booking.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +22,15 @@ public class RoomService {
     private final RoomRepository ROOM_REPOSITORY;
     private final RoomFileRepository ROOM_FILE_REPOSITORY;
     private final RoomTypeRepository ROOM_TYPE_REPOSITORY;
+    private final FacilityRepository facilityRepository;
 
 
-    public RoomService(HotelRepository hotelRepository, RoomRepository roomRepository, RoomTypeRepository roomTypeRepository, RoomFileRepository roomFileRepository) {
-        this.HOTEL_REPOSITORY = hotelRepository;
-        this.ROOM_REPOSITORY = roomRepository;
-        this.ROOM_FILE_REPOSITORY = roomFileRepository;
-        this.ROOM_TYPE_REPOSITORY = roomTypeRepository;
+    public RoomService(HotelRepository HOTEL_REPOSITORY, RoomRepository ROOM_REPOSITORY, RoomFileRepository ROOM_FILE_REPOSITORY, RoomTypeRepository ROOM_TYPE_REPOSITORY, FacilityRepository facilityRepository) {
+        this.HOTEL_REPOSITORY = HOTEL_REPOSITORY;
+        this.ROOM_REPOSITORY = ROOM_REPOSITORY;
+        this.ROOM_FILE_REPOSITORY = ROOM_FILE_REPOSITORY;
+        this.ROOM_TYPE_REPOSITORY = ROOM_TYPE_REPOSITORY;
+        this.facilityRepository = facilityRepository;
     }
 
     public Long insert(RoomDto roomDto) throws IOException {

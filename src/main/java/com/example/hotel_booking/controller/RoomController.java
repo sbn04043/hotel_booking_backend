@@ -129,13 +129,13 @@ public class RoomController {
     public HashMap<String, Object> write(@PathVariable Long hotelId, @RequestBody RoomDto roomDto) {
         System.out.println(roomDto);
         roomDto.setHotelId(hotelId);
-        List<RoomTypeDto> roomTypeDtoList = ROOM_TYPE_SERVICE.selectAll();
-        HashMap<String, Object> resultMap = new HashMap<>();
+        List<RoomTypeDto> roomTypeDtoList=ROOM_TYPE_SERVICE.selectAll();
+        HashMap<String,Object> resultMap = new HashMap<>();
         try {
             Long id = ROOM_SERVICE.insert(roomDto);
-            resultMap.put("result", "success");
-            resultMap.put("roomId", id);
-            resultMap.put("roomTypeList", roomTypeDtoList);
+            resultMap.put("result","success");
+            resultMap.put("roomId",id);
+            resultMap.put("roomTypeList",roomTypeDtoList);
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("result", "fail");
@@ -179,5 +179,4 @@ public class RoomController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

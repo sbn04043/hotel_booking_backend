@@ -50,6 +50,7 @@ public class RoomController {
         resultMap.put("roomTypeList", ROOM_TYPE_SERVICE.selectAll());
         resultMap.put("roomFileDtoList", roomFileDtoList);
         resultMap.put("roomPrice", ROOM_SERVICE.selectOne(id).getRoomPrice());
+        System.out.println(ROOM_SERVICE.selectOne(id).getRoomPrice());
 
         System.out.println(ROOM_SERVICE.selectOne(id));
         // 호텔 아이디를 통해 userID를 빼와야함 지금은 없으니까 비교 안하고 클릭 버튼만 해놓자

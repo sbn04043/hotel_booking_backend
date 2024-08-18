@@ -6,6 +6,7 @@ import com.example.hotel_booking.dto.HotelFileDto;
 import com.example.hotel_booking.service.FacilityService;
 import com.example.hotel_booking.service.HotelFileService;
 import com.example.hotel_booking.service.HotelService;
+import com.example.hotel_booking.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -30,6 +31,7 @@ public class HotelController {
     private final HotelService hotelService;
     private final FacilityService facilityService;
     private final HotelFileService hotelFileService;
+    private final WishlistService wishlistService;
 
     @GetMapping("hotelAll")
     public HashMap<String, Object> hotelAll() {
@@ -39,8 +41,7 @@ public class HotelController {
         for (HotelDto hotelDto : hotelDtoList) {
             hotelDto.setImageList(hotelFileService.findByHotelIdToName(hotelDto.getId()));
         }
-
-
+        
 
         System.out.println(hotelDtoList);
 

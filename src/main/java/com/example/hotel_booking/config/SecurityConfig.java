@@ -28,8 +28,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize)->
                         authorize
-                                .requestMatchers("/user/**","/**").permitAll()
-                                .requestMatchers("/user/authOk").authenticated()
+                                .requestMatchers("/user/**","/").permitAll()
+                                .requestMatchers("/guest/**","reservation/**").hasAnyAuthority("GUEST")
+                                .requestMatchers("/hotel/write/**","/hotel/imgInsert/**","/hotel/update/**","/hotel/delete/**").hasAnyAuthority("BUSINESS")
+                                .requestMatchers("/room/write/**","/room/imgInsert/**","/room/update/**","/room/delete/**").hasAnyAuthority("BUSINESS")
+
+                                .requestMatchers("/user/authOk","/hotel/hotelAll","/hotel/hotelOne/*","/room/showOne/*","/room/showList/*").authenticated()
                 )
 
                 .formLogin((form) ->

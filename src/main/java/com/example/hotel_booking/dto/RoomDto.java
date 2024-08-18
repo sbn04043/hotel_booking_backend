@@ -40,7 +40,7 @@ public class RoomDto implements Serializable {
 
 
     public static RoomDto toRoomDto(RoomEntity roomEntity, Long hotelId) {
-        RoomDto roomDto=new RoomDto();
+        RoomDto roomDto = new RoomDto();
         roomDto.setId(roomEntity.getId());
         roomDto.setRoomName(roomEntity.getRoomName());
         roomDto.setRoomMax(roomEntity.getRoomMax());

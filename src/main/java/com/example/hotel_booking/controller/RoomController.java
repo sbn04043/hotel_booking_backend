@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +49,7 @@ public class RoomController {
         resultMap.put("roomDto", ROOM_SERVICE.selectOne(id));
         resultMap.put("roomTypeList", ROOM_TYPE_SERVICE.selectAll());
         resultMap.put("roomFileDtoList", roomFileDtoList);
+        resultMap.put("roomPrice", ROOM_SERVICE.selectOne(id).getRoomPrice());
 
         System.out.println(ROOM_SERVICE.selectOne(id));
         // 호텔 아이디를 통해 userID를 빼와야함 지금은 없으니까 비교 안하고 클릭 버튼만 해놓자
@@ -82,6 +82,7 @@ public class RoomController {
         System.out.println(roomDto);
         return roomDto;
     }
+
     @PostMapping("imgInsert/{id}")
     public void insertImg(@RequestParam(value = "file", required = false) MultipartFile[] files, @PathVariable Long id, HttpServletRequest request) throws IOException {
 
@@ -180,4 +181,34 @@ public class RoomController {
         }
     }
 
+    @PostMapping("showListByCondition")
+    public HashMap<String, Object> selectListByDateAndPeopleCount(@RequestBody Map<String, Object> params) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+
+        int hotelId = (Integer) params.get("hotelId");
+        String startDateData = (String) params.get("startDate");
+        String endDateData = (String) params.get("endDate");
+        Integer peopleCount = (Integer) params.get("peopleCount");
+
+        String startDate = startDateData.substring(0, 4) + startDateData.substring(5, 7) + startDateData.substring(8, 10);
+        String endDate = endDateData.substring(0, 4) + endDateData.substring(5, 7) + endDateData.substring(8, 10);
+
+        List<RoomDto> roomDtoList = ROOM_SERVICE.selectAllByCondition(startDate, endDate, (long) hotelId, peopleCount);
+
+
+        List<RoomTypeDto> roomTypeDtoList = ROOM_TYPE_SERVICE.selectAll();
+
+        for (RoomDto roomDto : roomDtoList) {
+            roomDto.setImageList(ROOM_FILE_SERVICE.findByRoomIdToName(roomDto.getId()));
+        }
+
+
+        resultMap.put("roomTypeList", roomTypeDtoList);
+        resultMap.put("roomList", roomDtoList);
+        resultMap.put("startDate", startDate);
+        resultMap.put("endDate", endDate);
+        resultMap.put("peopleCount", peopleCount);
+
+        return resultMap;
+    }
 }

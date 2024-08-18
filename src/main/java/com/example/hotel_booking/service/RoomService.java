@@ -2,13 +2,12 @@ package com.example.hotel_booking.service;
 
 import com.example.hotel_booking.dto.RoomDto;
 import com.example.hotel_booking.entity.HotelEntity;
+import com.example.hotel_booking.entity.ReservationEntity;
 import com.example.hotel_booking.entity.RoomEntity;
 import com.example.hotel_booking.entity.RoomTypeEntity;
-import com.example.hotel_booking.repository.HotelRepository;
-import com.example.hotel_booking.repository.RoomFileRepository;
-import com.example.hotel_booking.repository.RoomRepository;
-import com.example.hotel_booking.repository.RoomTypeRepository;
+import com.example.hotel_booking.repository.*;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -25,13 +24,19 @@ public class RoomService {
     private final RoomRepository ROOM_REPOSITORY;
     private final RoomFileRepository ROOM_FILE_REPOSITORY;
     private final RoomTypeRepository ROOM_TYPE_REPOSITORY;
+    private final ReservationRepository RESERVATION_REPOSITORY;
 
-
-    public RoomService(HotelRepository hotelRepository, RoomRepository roomRepository, RoomTypeRepository roomTypeRepository, RoomFileRepository roomFileRepository) {
+    @Autowired
+    public RoomService(HotelRepository hotelRepository,
+                       RoomRepository roomRepository,
+                       RoomTypeRepository roomTypeRepository,
+                       RoomFileRepository roomFileRepository,
+                       ReservationRepository reservationRepository) {
         this.HOTEL_REPOSITORY = hotelRepository;
         this.ROOM_REPOSITORY = roomRepository;
         this.ROOM_FILE_REPOSITORY = roomFileRepository;
         this.ROOM_TYPE_REPOSITORY = roomTypeRepository;
+        this.RESERVATION_REPOSITORY = reservationRepository;
     }
 
     public Long insert(RoomDto roomDto) throws IOException {
@@ -87,5 +92,50 @@ public class RoomService {
         ROOM_REPOSITORY.deleteById(id);
     }
 
+    @Transactional
+    public List<RoomDto> selectAllByCondition(String startDate, String endDate, Long hotelId, Integer peopleCount) {
+        List<RoomDto> roomDtoList = new ArrayList<>();
+        List<RoomEntity> roomEntityList = ROOM_REPOSITORY.findAllByHotelId(hotelId);
 
+        for (int i = 0; i < roomEntityList.size(); i++) {
+            RoomEntity roomEntity = roomEntityList.get(i);
+            System.out.println(roomEntity.toString());
+
+            List<ReservationEntity> reservationEntityList = RESERVATION_REPOSITORY.findAllByRoomId(roomEntity.getId());
+            int num = 0;
+            System.out.println(startDate + " " + endDate);
+            for (ReservationEntity reservationEntity : reservationEntityList) {
+                String tempStartDate = reservationEntity.getStartDate().toString();
+                String tempEndDate = reservationEntity.getEndDate().toString();
+
+                String r_startDate = tempStartDate.substring(0, 4) + tempStartDate.substring(5, 7) + tempStartDate.substring(8, 10);
+                String r_endDate = tempEndDate.substring(0, 4) + tempEndDate.substring(5, 7) + tempEndDate.substring(8, 10);
+
+                System.out.println(r_startDate + " " + r_endDate);
+
+                int start = Integer.parseInt(startDate);
+                int end = Integer.parseInt(endDate);
+                int r_start = Integer.parseInt(r_startDate);
+                int r_end = Integer.parseInt(r_endDate);
+
+                if (start > r_start && start < r_end
+                        || end > r_start && end < r_end
+                        || r_start > start && r_start < end
+                        || r_end > start && r_end < end
+                        || start < r_start && end > r_end
+                        || r_start < start && r_end > end
+                        || r_start == start && r_end == end
+                ) {
+                    num++;
+                    System.out.println(num);
+                }
+            }
+
+            RoomEntity tempRoomEntity = (RoomEntity) roomEntity.clone();
+            tempRoomEntity.setRoomMax(roomEntity.getRoomMax() - num);
+            roomDtoList.add(RoomDto.toRoomDto(tempRoomEntity, hotelId));
+        }
+
+        return roomDtoList;
+    }
 }

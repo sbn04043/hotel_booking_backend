@@ -25,7 +25,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "room")
-public class RoomEntity extends TimeEntity {
+public class RoomEntity extends TimeEntity implements Cloneable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -88,6 +88,15 @@ public class RoomEntity extends TimeEntity {
         roomEntity.setHotelEntity(hotelEntity);
         roomEntity.setRoomTypeEntity(roomTypeEntity);
         return roomEntity;
+    }
+
+    @Override
+    public Object clone() {
+        Object obj = null;
+        try {
+            obj = super.clone();
+        } catch (CloneNotSupportedException e) {}
+        return obj;
     }
 
 }

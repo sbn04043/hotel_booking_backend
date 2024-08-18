@@ -12,4 +12,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     List<ReservationEntity> findByGuestId(Long userId);
 
     List<ReservationEntity> findAllByGuestEntity(UserEntity userEntity);
+
+    @Query(value = "SELECT * FROM room_reservation WHERE room_id = ?1", nativeQuery = true)
+    List<ReservationEntity> findAllByRoomId(Long id);
 }

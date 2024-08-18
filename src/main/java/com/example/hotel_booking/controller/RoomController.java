@@ -78,7 +78,7 @@ public class RoomController {
     @GetMapping("write/{hotelId}")
     public RoomDto write(@PathVariable Long hotelId) {
         RoomDto roomDto = new RoomDto();
-        roomDto.setHotelId(1L);
+        roomDto.setHotelId(hotelId);
         System.out.println(roomDto);
         return roomDto;
     }

@@ -40,10 +40,6 @@ public class HotelController {
             hotelDto.setImageList(hotelFileService.findByHotelIdToName(hotelDto.getId()));
         }
 
-
-
-
-
         System.out.println(hotelDtoList);
 
         resultmap.put("hotelList", hotelDtoList);

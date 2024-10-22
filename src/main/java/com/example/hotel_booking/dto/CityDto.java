@@ -4,11 +4,11 @@ import lombok.Value;
 
 import java.io.Serializable;
 
-/**
+/*
  * DTO for {@link com.example.hotel_booking.entity.CityEntity}
  */
 @Value
 public class CityDto implements Serializable {
-    Long id;
-    String cityName;
+    private Long id;
+    private String cityName;
 }

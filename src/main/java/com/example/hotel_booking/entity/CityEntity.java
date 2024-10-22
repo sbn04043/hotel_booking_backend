@@ -1,11 +1,12 @@
 package com.example.hotel_booking.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
+
 @Entity
 @Table(name = "city")
 public class CityEntity {

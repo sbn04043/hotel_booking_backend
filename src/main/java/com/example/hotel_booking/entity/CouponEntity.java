@@ -1,6 +1,7 @@
 package com.example.hotel_booking.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +16,8 @@ import lombok.Setter;
  * ---------------------------------------------------
  * 2024-08-06         jaejun
  */
-@Getter
-@Setter
+@Data
+
 @Entity
 @Table(name = "hotel_coupon")
 public class CouponEntity extends TimeEntity{

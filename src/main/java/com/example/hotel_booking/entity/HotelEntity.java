@@ -2,6 +2,7 @@ package com.example.hotel_booking.entity;
 
 import com.example.hotel_booking.dto.HotelDto;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.catalina.User;
@@ -21,8 +22,8 @@ import java.util.List;
  * 2024-08-06         jaejun
  */
 
-@Getter
-@Setter
+@Data
+
 @Entity
 @Table(name = "hotel")
 public class HotelEntity extends TimeEntity{
